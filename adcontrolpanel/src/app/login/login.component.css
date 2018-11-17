@@ -1,0 +1,36 @@
+/* Bordered form */
+form {
+
+     font-family:Helvetica Neue, Helvetica,Arial, sans-serif;
+  
+}
+/* Full-width inputs */
+input[type=text], input[type=password] {
+      width:30%;
+    font-family:Helvetica Neue, Helvetica,Arial, sans-serif;
+   
+}
+/* Validation messages */
+.errormsg
+{
+	color:red;
+	font-family:Helvetica Neue, Helvetica,Arial, sans-serif;
+	
+}
+
+/* Set a style for all buttons */
+.button {
+	font-family:Helvetica Neue, Helvetica,Arial, sans-serif;
+    background-color: #0088ca;
+    width: 10%;
+    border: none;
+}
+/* Add padding to containers */
+.container {
+    padding: 16px;
+    font-family:Helvetica Neue, Helvetica,Arial, sans-serif;
+}
+.img{
+	
+	height:55px;
+}

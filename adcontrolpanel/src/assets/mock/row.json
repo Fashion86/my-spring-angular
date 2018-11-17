@@ -1,0 +1,27 @@
+{
+  "response": {
+    "eventSequence": "ES2",
+    "scheduledTime": "ST2",
+    "eventDuration": "ED2",
+    "audioSource": "AUDI2",
+    "programRating": "PROB",
+    "materialId": "M2",
+    "description": "DESC2",
+    "showNumber": "SN2",
+    "secondaryOffset": "SO2",
+    "showSegment": "S2",
+    "eventSddequence": "ES2",
+    "scheduledTdime": "ST2",
+    "eventDuratdion": "ED2",
+    "audioSourcde": "AUDI2",
+    "programRatding": "PROB",
+    "materiadlId": "M2",
+    "descripdtion": "DESC2",
+    "showNumdber": "SN2",
+    "secondadryOffset": "SO2",
+    "showSegdment": "S2",
+    "showSeghhhment": "S2",
+    "id": 1
+  },
+  "success": true
+}

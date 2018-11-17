@@ -1,0 +1,17 @@
+﻿
+<channel>
+    <mainStation name="CityStations">
+        <substation name="City Toronto"></substation>
+        <substation name="City Vancouver"></substation>
+        <substation name="City Calagry"></substation>
+        <substation name="City Edmonton"></substation>
+        <substation name="City Montreal"></substation>
+        <substation name="City Saskatchewan"></substation>
+        <substation name="City Winnipeg"></substation>
+    </mainStation>
+   <mainStation name="Test1">
+        <substation name="Sub Test1"></substation>
+        <substation name="Sub Test2"></substation>
+    </mainStation>
+  
+</channel>

@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+#body-row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+body {
+    margin: 0 !important;
+}
+.bg-danger {
+    background-color: #ed1c24 !important;
+}
+.navbar-brand img {
+    width: 10pc;
+    height: 3pc;
+    margin-left: -20px;
+}

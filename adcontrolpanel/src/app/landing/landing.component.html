@@ -1,0 +1,108 @@
+<div class="modal" tabindex="-1" id="myModal" [ngStyle]="{'display':display}">
+    <div role="document" class="modal-dialog modal-lg" style="width:1200px" [ngStyle]="{'display':display}">
+        <div class="modal-content">
+            <div class="modal-header" data-show="true">
+                <h4 class="modal-title pull-left">Search Criteria</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalhide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                    <table>
+                        <tr>
+                            <td>
+                                <div>
+                                    <ul>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Date Range:</label>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="daterange" style="width:200px" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
+                                                </td>
+                                            </tr>
+                                            <br/>
+                                            <tr>
+                                                <td>
+                                                    <label> House No: </label>
+                                                </td>
+                                                <td>
+                                                    <textarea placeholder="HouseNumber" style="overflow:auto;resize:none" name="houseNo" [(ngModel)]="searchForm.houseNo" rows="1" style="width:200px"> </textarea>
+                                                    <br/> <i class="test">Please do not use "-" in between multiple house number</i>
+                                                </td>
+                                            </tr>
+                                            <br/>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="logs" name="logs" [(ngModel)]="searchForm.logs" />
+                                                    <label for="logs">Logs</label>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" id="asRuns" name="asRuns" />
+                                                    <label for="asRuns">As Runs</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Manually select file</label>
+                                                </td>
+                                                <td>
+                                                    <input type="file" name="datafile">
+                                                </td>
+                                                <br/><br/><br/>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary">Search</button>
+                                                </td>
+                                                <td>
+                                                    <button type="reset" class="btn btn-primary">Reset</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="padding-right: 40px"></td>
+                            <td>
+                                <label>Select Stations:</label>
+                            </td>
+                            <td style="padding-right: 10px">
+                                <select multiple="multiple" id='lstBox1' style="height:300px;width:200px" class="form-control" name="moveData" [(ngModel)]="moveData">
+                  <optgroup *ngFor="let options of moveOptions" [label]="options.label" (click)="selectAllStationMove(options.label, options.values)">
+                    <option *ngFor="let option of options.values" [value]="option" [selected]="moveData.includes(option) ? true : false" (click)="checkOptionClick($event)">{{option.name}}</option>
+                  </optgroup>
+                </select>
+                            </td>
+                            <td style="padding-right: 10px">
+                                <div class="subject-info-arrows text-center">
+                                    <input type="button" id="btnAllRight" value=">>" style="height:30px;width:40px;" (click)="moveAll()" class="btn btn-default" />
+                                    <br/>
+                                    <br/>
+                                    <input type="button" id="btnRight" value=">" style="height:30px;width:40px" (click)="moveSelectedItem(moveData)" class="btn btn-default" />
+                                    <br/>
+                                    <br/>
+                                    <input type="button" id="btnLeft" value="<" style="height:30px;width:40px" (click)="removeSelectedItem(removeData)" class="btn btn-default" />
+                                    <br/>
+                                    <br/>
+                                    <input type="button" id="btnAllLeft" value="<<" style="height:30px;width:40px" (click)="removeAll()" class="btn btn-default" />
+                                </div>
+                            </td>
+                            <td>
+                                <select multiple="multiple" id='lstBox2' style="height:300px;width:200px" class="form-control" name="removeData" [(ngModel)]="removeData">
+                  <optgroup *ngFor="let options of removeOptions" [label]="options.label" (click)="selectAllStationRemove(options.label, options.values)">
+                    <option *ngFor="let option of options.values" [value]="option" [selected]="removeData.includes(option) ? true : false" (click)="checkOptionClick($event)">{{option.name}}</option>
+                  </optgroup>
+                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

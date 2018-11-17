@@ -1,0 +1,47 @@
+{
+    "response": [
+        {
+            "eventSequence": "ES2",
+            "scheduledTime": "ST2",
+            "eventDuration": "ED2",
+            "audioSource": "AUDI2",
+            "programRating": "PROB",
+            "materialId": "M2",
+            "description": "DESC2",
+            "showNumber": "SN2",
+            "secondaryOffset": "SO2",
+            "showSegment": "S2",
+            "breakType": "BT2",
+            "id": 1
+        },
+        {
+            "eventSequence": "ES3",
+            "scheduledTime": "ST3",
+            "eventDuration": "ED3",
+            "audioSource": "AUDI3",
+            "programRating": "PROC",
+            "materialId": "M3",
+            "description": "DESC3",
+            "showNumber": "SN3",
+            "secondaryOffset": "SO3",
+            "showSegment": "S3",
+            "breakType": "BT3",
+            "id": 2
+        },
+        {
+            "eventSequence": "ES4",
+            "scheduledTime": "ST4",
+            "eventDuration": "ED4",
+            "audioSource": "AUDI4",
+            "programRating": "PROD",
+            "materialId": "M4",
+            "description": "DESC4",
+            "showNumber": "SN4",
+            "secondaryOffset": "SO4",
+            "showSegment": "S4",
+            "breakType": "BT4",
+            "id": 3
+        }
+    ],
+    "success": true
+}

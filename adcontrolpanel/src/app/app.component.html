@@ -1,0 +1,22 @@
+<!-- This code is used to render other components of angular -->
+<nav class="navbar navbar-expand-md navbar-dark bg-danger">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand">
+        <img src="assets/images/RedUI.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    </a>
+    <h3 style="color:white;" class="ml-auto"><span class="ml-auto">AD Control panel</span></h3>
+</nav>
+
+<div class="row" id="body-row">
+    <app-sidebar *ngIf="show"></app-sidebar>
+    <div class="col">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<!-- <footer class="footer">
+    <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+</footer> -->

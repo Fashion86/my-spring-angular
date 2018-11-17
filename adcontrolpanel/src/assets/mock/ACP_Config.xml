@@ -1,0 +1,56 @@
+﻿
+<channel>
+    <mainStation name="City Stations">
+        <substation name="City Toronto"></substation>
+        <substation name="City Vancouver"></substation>
+        <substation name="City Calagry"></substation>
+        <substation name="City Edmonton"></substation>
+        <substation name="City Montreal"></substation>
+        <substation name="City Saskatchewan"></substation>
+        <substation name="City Winnipeg"></substation>
+    </mainStation>
+    <mainStation name="Omni Stations">
+        <substation name="Omni Vancouver"></substation>
+        <substation name="Omni Calagry"></substation>
+        <substation name="Omni Edmonton"></substation>
+        <substation name="Omni East"></substation>
+        <substation name="Omni Quebec/ICI"></substation>
+    </mainStation>
+    <mainStation name="Sportsnet Stations">
+        <substation name="SN Ontario"></substation>
+        <substation name="SN East"></substation>
+        <substation name="SN West"></substation>
+        <substation name="SN Pacific"></substation>
+        <substation name="SN One"></substation>
+        <substation name="SN World"></substation>
+        <substation name="SN 360"></substation>
+        <substation name="SN Int suite"></substation>
+    </mainStation>
+    <mainStation name="Speciality Stations">
+        <substation name="OLN"></substation>
+        <substation name="FX"></substation>
+        <substation name="FXX"></substation>
+    </mainStation>
+    <mainStation name="RS Network Stations">
+        <substation name="RS Ontario"></substation>
+        <substation name="RS Atlantic"></substation>
+        <substation name="RS Quebec"></substation>
+        <substation name="RS Manitoba"></substation>
+        <substation name="RS Alberta North"></substation>
+        <substation name="RS Alberta South"></substation>
+        <substation name="RS Saskatchewan"></substation>
+        <substation name="RS British Columbia"></substation>
+        <substation name="RS Plus"></substation>
+    </mainStation>
+    <mainStation name="CBC Stations">
+        <substation name="CBCT Charlottetown"></substation>
+        <substation name="CBHT Halifax"></substation>
+        <substation name="CBAT Moncton"></substation>
+        <substation name="CBLT Toronto"></substation>
+        <substation name="CBOT Ottawa"></substation>
+        <substation name="CBET Windsor"></substation>
+        <substation name="CBMT Montreal"></substation>
+        <substation name="CBWT Winnipeg"></substation>
+        <substation name="CBKT Regina"></substation>
+    </mainStation>
+</channel>

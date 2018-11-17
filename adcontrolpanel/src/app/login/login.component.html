@@ -1,0 +1,30 @@
+<div align="center" class="container">
+    <form #myForm="ngForm">
+        <img src="assets/images/Rogers-logo.png" width="150px" class="user-avatar" />
+        <div *ngIf="!allowRoute && (name.untouched || name.pristine)" class="errormsg" align="center">
+            The password or username were incorrect,please try again
+        </div>
+        <div class="container" align="center">
+            <label for="uname">Username or Email Address  </label><br/>
+            <input type="text" id="username" placeholder="Enter Username" name="username" [(ngModel)]="username" #name="ngModel" required>
+            <div *ngIf="name.invalid && (name.touched || name.dirty)">
+                <div *ngIf="name.errors.required" class="errormsg">
+                    User Name or Email is required
+                </div>
+            </div>
+            <br/>
+            <label for="psw" class="control-label" for="password">Password</label>
+            <br/>
+            <input type="password" id="password" placeholder="Enter Password" name="psw" [(ngModel)]="password" #psw="ngModel" required>
+            <div *ngIf="psw.invalid && (psw.touched || psw.dirty)" class="errormsg">
+                <div *ngIf="psw.errors.required">
+                    Password is required
+                </div>
+            </div>
+        </div>
+        <div>
+            <a href="#" [routerLink]="['/login']">Lost your password?</a>
+            <input type="button" align="right" class="button" [disabled]="(name.invalid && psw.invalid)" (click)="OnpasswordValidate(); myForm.reset()" value="Login">
+        </div>
+    </form>
+</div>

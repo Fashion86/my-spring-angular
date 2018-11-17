@@ -1,0 +1,27 @@
+.btn {
+    background-color: #ff0000;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+}
+
+.modal-body {
+    height: 500px;
+    background-color: white;
+    color: black;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.modal-header {
+    background-color: red;
+    padding: 4px 4px;
+    color: #FFF;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.test {
+    color: red;
+    font-size: 12px;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
