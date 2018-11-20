@@ -7,11 +7,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { parseString } from 'xml2js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { FilterdataService } from '../services/filterdata.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css']
+  styleUrls: ['./landing.component.css'],
+  providers: [FilterdataService]
 })
 
 export class LandingComponent implements OnInit  {
@@ -42,6 +45,7 @@ export class LandingComponent implements OnInit  {
   constructor(
     private router: Router,
     private dataService: DataService,
+    private filterService: FilterdataService,
     private http: HttpClient) {
     this.display = 'block';
   }
@@ -238,8 +242,22 @@ export class LandingComponent implements OnInit  {
     return 0;
   }
   onSubmit() {
-    console.log(this.searchForm);
-    this.dataService.setFormData(this.searchForm);
+    if (this.searchForm.daterange.start !== '' && this.searchForm.daterange.end !== '') {
+      this.searchForm.daterange.start = moment(this.searchForm.daterange.start, 'YYYY-MM-DD').format('YYYY-MM-DD');
+      this.searchForm.daterange.end = moment(this.searchForm.daterange.end, 'YYYY-MM-DD').format('YYYY-MM-DD');
+    }
+    if (this.searchForm.daterange.start === '') {
+      this.searchForm.daterange.start = moment(new Date().toISOString(), 'YYYY-MM-DD').format('YYYY-MM-DD');
+    }
+    if (this.searchForm.daterange.end === '') {
+      this.searchForm.daterange.end = moment(new Date().toISOString(), 'YYYY-MM-DD').format('YYYY-MM-DD');
+    }
+    const filter = {
+      'start': this.searchForm.daterange.start,
+      'end': this.searchForm.daterange.end
+    };
+    this.filterService.setFilter(Object.assign({}, filter));
+    localStorage.setItem('filter', JSON.stringify(filter));
     this.router.navigate(['results']);
   }
 

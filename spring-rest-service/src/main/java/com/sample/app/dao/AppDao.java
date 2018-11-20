@@ -4,15 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.stereotype.Component;
 
 import com.sample.app.model.AppData;
 import com.sample.app.model.Employee;
+import java.text.SimpleDateFormat;
 
 @Component
 public class AppDao {
@@ -37,6 +35,57 @@ public class AppDao {
 			empList.add(emp);
 		}
 		return empList;
+	}
+
+	public List<AppData> getAppDataListByDate(Connection conn, String startDate, String endDate) throws SQLException {
+
+		StringBuffer staionBuf = new StringBuffer();
+		StringBuffer channelBuf = new StringBuffer();
+
+
+		String sql = "select * from ACPMITDE.MAIN_DATA WHERE MAIN_DATA.MODIFIED_DATE_TIME BETWEEN ? AND ?";
+		System.out.println(sql);
+
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setDate(1, java.sql.Date.valueOf(startDate));
+		pstm.setDate(2, java.sql.Date.valueOf(endDate));
+		ResultSet rs = pstm.executeQuery();
+
+		List<AppData> appDataList = new ArrayList<AppData>();
+
+		while (rs.next()) {
+			String id = rs.getString("ID");
+			String filrtype = rs.getString("FILETYPE");
+			String eventDuration = rs.getString("EVENTDURATION");
+			String audioSource = rs.getString("AUDIOSOURCE");
+			String programRating = rs.getString("PROGRAMRATING");
+			String materialId = rs.getString("MATERIALID");
+			String description = rs.getString("DESCRIPTION");
+			String showNumber = rs.getString("SHOWNUMBER");
+			String secondaryOffset = rs.getString("SECONDARYOFFSET");
+			String showSegment = rs.getString("SHOWSEGMENT");
+			String breakType = rs.getString("BREAKTYPE");
+			String title = rs.getString("TITLE");
+			String fileName = rs.getString("FILENAME");
+
+			AppData appData = new AppData();
+			appData.setFileType(filrtype);
+			appData.setEventDuration(eventDuration);
+			appData.setAudioSource(audioSource);
+			appData.setProgramRating(programRating);
+			appData.setMaterialId(materialId);
+			appData.setDescription(description);
+			appData.setShowNumber(showNumber);
+			appData.setSecondaryOffset(secondaryOffset);
+			appData.setShowSegment(showSegment);
+			appData.setBreakType(breakType);
+			appData.setTitle(title);
+			appData.setId(id);
+			appData.setFileName(fileName);
+
+			appDataList.add(appData);
+		}
+		return appDataList;
 	}
 
 	public List<AppData> getAppDataList(Connection conn, String startDate, String endDate, List<String> houseNum,
@@ -79,10 +128,8 @@ public class AppDao {
 		}
 		}
 		
-//		String sql = "select * from ACPMITDE.main_data where MODIFIED_DATE_TIME BETWEEN '" + startDate + "' AND '"
-//				+ endDate + "' OR FILETYPE = '" + fileType +"'" ;
-        String sql = "select * from SYSTEM.main_data where MODIFIED_DATE_TIME BETWEEN '" + startDate + "' AND '"
-                + endDate + "' OR FILETYPE = '" + fileType +"'" ;
+		String sql = "select * from ACPMITDE.main_data where MODIFIED_DATE_TIME BETWEEN '" + startDate + "' AND '"
+				+ endDate + "' OR FILETYPE = '" + fileType +"'" ;
 			//	"SELECT EVENTSEQUENCE,SCHEDULEDTIME,EVENTDURATION,PROGRAMRATING,MATERIALID,DESCRIPTION,SHOWNUMBER,SECONDARYOFFSET,SHOWSEGMENT,BREAKTYPE FROM ACPMITDE.main_data	WHERE MODIFIED_DATE_TIME BETWEEN '18-10-31' AND '18-10-31' OR FILETYPE = 'LOGFILE'";
 		
 
@@ -123,18 +170,17 @@ public class AppDao {
 		return appDataList;
 	}
 
-	public AppData getAppDataRow(Connection conn, String rowId) throws SQLException {
+	public List<AppData> getAppDataRow(Connection conn, String filename) throws SQLException {
 
-		AppData appData = new AppData();
-		
+
+		List<AppData> appDataList = new ArrayList<AppData>();
+
 		try {
-		
-//		String sql = "SELECT * FROM ACPMITDE.main_data";
-            String sql = "SELECT * FROM SYSTEM.main_data";
-			//	+ "	WHERE ID = '" + rowId + "'";
-	PreparedStatement pstm = conn.prepareStatement(sql);
+		String sql = "select * from ACPMITDE.MAIN_DATA WHERE MAIN_DATA.FILENAME = '" + filename + "'";
+		System.out.println(sql);
+
+		PreparedStatement pstm = conn.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
-		
 		while (rs.next()) {
 			String eventSequence = rs.getString("EVENTSEQUENCE");
 			String scheduledTime = rs.getString("SCHEDULEDTIME");
@@ -165,7 +211,6 @@ public class AppDao {
 			String station = rs.getString("STATION");
 			String channel = rs.getString("CHANNEL");
 			String timeFormat = rs.getString("TIMEFORMAT");
-			// String interface = rs.getString("BREAKTYPE");
 			String version = rs.getString("VERSION");
 			String weekday = rs.getString("WEEKDAY");
 			String julianDate = rs.getString("JULIANDATE");
@@ -186,12 +231,12 @@ public class AppDao {
 			String schedComment = rs.getString("SCHEDCOMMENT");
 			String dlComment = rs.getString("DLCOMMENT");
 			String describedVideo = rs.getString("DESCRIBEDVIDEO");
-			String contractNumber = rs.getString("CONTRACTNUMBER");
-			String advertiser = rs.getString("ADVERTISER");
+//			String contractNumber = rs.getString("CONTRACTNUMBER");
+//			String advertiser = rs.getString("ADVERTISER");
 			String productName = rs.getString("PRODUCTNAME");
-			String sellingOptionName = rs.getString("SELLINGOPTIONNAMEM");
-			String fixInProgram = rs.getString("FIXINPROGRAM");
-			String fixInBreak = rs.getString("FIXINBREAK");
+//			String sellingOptionName = rs.getString("SELLINGOPTIONNAMEM");
+//			String fixInProgram = rs.getString("FIXINPROGRAM");
+//			String fixInBreak = rs.getString("FIXINBREAK");
 			String onAir = rs.getString("ON_AIR");
 			String empty = rs.getString("EMPTY");
 			String dateTime = rs.getString("DATE_TIME");
@@ -205,7 +250,8 @@ public class AppDao {
 			String reconcile = rs.getString("RECONCILE");
 			String type = rs.getString("TYPE");
 			String sec = rs.getString("SEC");
-			
+
+			AppData appData = new AppData();
 			appData.setEventSequence(eventSequence);
 			appData.setScheduledTime(scheduledTime);
 			appData.setEventDuration(eventDuration);
@@ -254,12 +300,12 @@ public class AppDao {
 			appData.setSchedComment(schedComment);
 			appData.setDlComment(dlComment);
 			appData.setDescribedVideo(describedVideo);
-			appData.setContractNumber(contractNumber);
-			appData.setAdvertiser(advertiser);
+//			appData.setContractNumber(contractNumber);
+//			appData.setAdvertiser(advertiser);
 			appData.setProductName(productName);
-			appData.setSellingOptionName(sellingOptionName);
-			appData.setFixInProgram(fixInProgram);
-			appData.setFixInBreak(fixInBreak);
+//			appData.setSellingOptionName(sellingOptionName);
+//			appData.setFixInProgram(fixInProgram);
+//			appData.setFixInBreak(fixInBreak);
 			appData.setOnAir(onAir);
 			appData.setEmpty(empty);
 			appData.setDateTime(dateTime);
@@ -273,17 +319,17 @@ public class AppDao {
 			appData.setReconcile(reconcile);
 			appData.setType(type);
 			appData.setSec(sec);
+			appDataList.add(appData);
 		}
-		
-		} 
+		}
 		catch (Exception e) {
-			
+			System.out.println("222");
+			System.out.println(e.getMessage());
 		}
 		finally {
 			conn.close();
 		}
-		
-		return appData;
+		return appDataList;
 	}
 
 	public AppData updateAppDataRow(Connection conn, String ids, String key, String newValue) throws SQLException {
@@ -291,8 +337,7 @@ public class AppDao {
 		AppData appData = new AppData();
 		try {
 		
-//		String sql = "UPDATE ACPMITDE.main_data SET " + key + " = ? WHERE ID = ? ";
-            String sql = "UPDATE SYSTEM.main_data SET " + key + " = ? WHERE ID = ? ";
+		String sql = "UPDATE ACPMITDE.main_data SET " + key + " = ? WHERE ID = ? ";
 
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, newValue);
@@ -300,10 +345,8 @@ public class AppDao {
 		
 		int rsint = pstm.executeUpdate();
 		
-//		String sqlget = "SELECT * FROM ACPMITDE.main_data"
-//				+ "	WHERE ID = '" + ids + "'";
-            String sqlget = "SELECT * FROM SYSTEM.main_data"
-                    + "	WHERE ID = '" + ids + "'";
+		String sqlget = "SELECT * FROM ACPMITDE.main_data"
+				+ "	WHERE ID = '" + ids + "'";
 		
 		PreparedStatement pstms = conn.prepareStatement(sqlget);
 
@@ -327,7 +370,6 @@ public class AppDao {
 			String fileName = rs.getString("FILENAME");
 			String houseNum = rs.getString("HOUSENUM");
 			String reconNum = rs.getString("RECONNUM");
-			String acpRecon = rs.getString("ACP_RECON");
 			String lineNum = rs.getString("LINENUM");
 			String acpVersion = rs.getString("ACP_VERSION");
 			String modifiedBy = rs.getString("MODIFIED_BY");
@@ -395,7 +437,6 @@ public class AppDao {
 			appData.setFileName(fileName);
 			appData.setHouseNum(houseNum);
 			appData.setReconNum(reconNum);
-			appData.setAcpRecon(acpRecon);
 			appData.setLineNum(lineNum);
 			appData.setAcpVersion(acpVersion);
 			appData.setModifiedBy(modifiedBy);

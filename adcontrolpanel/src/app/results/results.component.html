@@ -1,43 +1,69 @@
-<h1> Results:</h1>
-<div class="table-responsive">
-  <table class="table">
-    <tr>
-      <th>Audio Source</th>
-      <th>Break Type</th>
-      <th>Description</th>
-      <th>Event Duration</th>
-      <th>Event Sequence</th>
-      <th>Material Id</th>
-      <th>Program Rating</th>
-      <th>Scheduled Time</th>
-      <th>Secondary Offset</th>
-      <th>Show Number</th>
-      <th>Show Segment</th>
-    </tr>
-    <tbody *ngIf="results">
+<div class="row">
+  <h1> Results:</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <th>Audio Source</th>
+        <th>Break Type</th>
+        <th>Description</th>
+        <th>Event Duration</th>
+        <th>Event Sequence</th>
+        <th>Material Id</th>
+        <th>Program Rating</th>
+        <th>Scheduled Time</th>
+        <th>Secondary Offset</th>
+        <th>Show Number</th>
+        <th>Show Segment</th>
+      </tr>
+      <tbody *ngIf="results">
       <tr *ngFor="let result of results.response" (click)="openTab(result)">
-        <td> {{result.audioSource}} </td>
-        <td> {{result.breakType}} </td>
-        <td> {{result.description}} </td>
-        <td> {{result.eventDuration}} </td>
-        <td> {{result.eventSequence}} </td>
-        <td> {{result.materialId}} </td>
-        <td> {{result.programRating}} </td>
+        <td>
+          <p *ngIf="result.audioSource">{{result.audioSource}}</p>
+          <p *ngIf="!result.audioSource">N/A</p>
+        </td>
+        <td>
+          <p *ngIf="result.breakType">{{result.breakType}}</p>
+          <p *ngIf="!result.breakType">N/A</p>
+        </td>
+        <td>
+          <p *ngIf="result.description">{{result.description}}</p>
+          <p *ngIf="!result.description">N/A</p>
+        </td>
+        <td>
+          <p *ngIf="result.eventDuration">{{result.eventDuration}}</p>
+          <p *ngIf="!result.eventDuration">N/A</p>
+        </td>
+        <td>
+          <p *ngIf="result.eventSequence">{{result.eventSequence}}</p>
+          <p *ngIf="!result.eventSequence">N/A</p>
+        </td>
+        <td>
+          <p *ngIf="result.materialId">{{result.materialId}}</p>
+          <p *ngIf="!result.materialId">N/A</p>
+        </td>
+        <td>
+          <p *ngIf="result.programRating">{{result.programRating}}</p>
+          <p *ngIf="!result.programRating">N/A</p>
+        </td>
         <td> {{result.scheduledTime}} </td>
         <td> {{result.secondaryOffset}} </td>
         <td> {{result.showNumber}} </td>
         <td> {{result.showSegment}} </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <tabset>
+      <tab *ngFor="let tab of tabs" (select)="onSelectTab(tab)">
+        <ng-template tabHeading>
+          {{tab.fileName}}
+          <a (click)="removeTab(tab)"><i class="fa fa-times"></i></a>
+        </ng-template>
+      </tab>
+      <app-channel-tab-content [editaction]="editaction" [data]="activetab"></app-channel-tab-content>
+    </tabset>
+  </div>
 </div>
 
-<tabset>
-  <tab *ngFor="let tab of tabs">
-    <ng-template tabHeading>
-      {{tab.audioSource}}
-      <a (click)="removeTab(tab)"><i class="fa fa-times"></i></a>
-    </ng-template>
-    <app-channel-tab-content [data]="tab"></app-channel-tab-content>
-  </tab>
-</tabset>
+

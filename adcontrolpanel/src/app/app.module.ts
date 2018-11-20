@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Directive } from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 
 import { HotTableModule } from '@handsontable/angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -19,6 +19,7 @@ import { UnderconstructionComponent } from './underconstruction/underconstructio
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ResultsComponent } from './results/results.component';
 import { DataService } from './data.service';
+import { FilterdataService } from './services/filterdata.service';
 import { ChannelTabContentComponent } from './channel-tab-content/channel-tab-content.component';
 
 @NgModule({
@@ -43,19 +44,9 @@ import { ChannelTabContentComponent } from './channel-tab-content/channel-tab-co
     HotTableModule.forRoot(),
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    RouterModule.forRoot(
-      [
-        { path: '', component: LoginComponent },
-        { path: 'login', component: LoginComponent },
-        /* {path: 'lostpassword', component:LostpasswordComponent}, */
-        { path: 'landing', component: LandingComponent },
-        { path: 'underconstruction', component: UnderconstructionComponent },
-        { path: 'results', component: ResultsComponent }
-      ],
-      { useHash: true }
-    )
+    AppRoutingModule
   ],
-  providers: [DataService],
+  providers: [DataService, FilterdataService],
 
   bootstrap: [AppComponent]
 })

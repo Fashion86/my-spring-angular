@@ -46,17 +46,17 @@ public class AppService {
 	public Object getAppRecordBtwDates(Map<String, Object> reqMap) {
 
 		Connection conn = null;
-		Map<String, String> dateRange = AppUtil.getDateRange(reqMap);
-		
-		String startDate = AppUtil.getStartDate(dateRange);
-		String endDate = AppUtil.getEndDate(dateRange);
-		List<String> houseNum = AppUtil.getHouseNum(reqMap);
-		List<String> stations = AppUtil.getStations(reqMap);
-		List<String> channels = AppUtil.getChannels(reqMap);
-		String fileType= AppUtil.getFileTYpe(reqMap);
-		
-		
-		
+//		Map<String, String> dateRange = AppUtil.getDateRange(reqMap);
+
+		String startDate = reqMap.get("start").toString();
+		String endDate = reqMap.get("end").toString();
+//		List<String> houseNum = AppUtil.getHouseNum(reqMap);
+//		List<String> stations = AppUtil.getStations(reqMap);
+//		List<String> channels = AppUtil.getChannels(reqMap);
+//		String fileType= AppUtil.getFileTYpe(reqMap);
+
+
+
 		try {
 			conn = ConnectionUtils.getDBConnection();
 		} catch (ClassNotFoundException e) {
@@ -66,8 +66,9 @@ public class AppService {
 		}
 		List<AppData> appDataList = new ArrayList<AppData>();
 		try {
-			
-			appDataList = appDao.getAppDataList(conn, startDate, endDate, houseNum,stations,channels, fileType);
+
+//			appDataList = appDao.getAppDataList(conn, startDate, endDate, houseNum,stations,channels, fileType);
+			appDataList = appDao.getAppDataListByDate(conn, startDate, endDate);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -79,7 +80,7 @@ public class AppService {
 
 		Connection conn = null;
 
-		String id = AppUtil.getId(reqMap);
+		String filename = reqMap.get("filename").toString();
 		try {
 			conn = ConnectionUtils.getDBConnection();
 		} catch (ClassNotFoundException e) {
@@ -87,13 +88,13 @@ public class AppService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		AppData appData = new AppData();
+		List<AppData> appDataList = new ArrayList<AppData>();
 		try {
-			appData = appDao.getAppDataRow(conn, id);
+			appDataList = appDao.getAppDataRow(conn, filename);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return appData;
+		return appDataList;
 	}
 
 	public Object updateRowData(Map<String, Object> reqMap) {

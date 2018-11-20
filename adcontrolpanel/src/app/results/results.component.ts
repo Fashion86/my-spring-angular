@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { DataService } from '../data.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as Handsontable from 'handsontable';
 
 @Component({
   selector: 'app-results',
@@ -9,8 +11,12 @@ import { DataService } from '../data.service';
 export class ResultsComponent implements OnInit {
   results: any;
   tabs: any[] = [];
+  editaction = new EventEmitter<any>();
+  activetab: any;
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute) {
 
-  constructor(private dataService: DataService) {}
+  }
 
   ngOnInit() {
     this.dataService.getResult().subscribe(
@@ -26,14 +32,24 @@ export class ResultsComponent implements OnInit {
   }
 
   openTab(row) {
-    console.log(row);
-    const exist = this.tabs.find(a => a.audioSource === row.audioSource);
+    const exist = this.tabs.find(a => a.id === row.id);
     if (!exist) {
-      this.tabs.push(row);
+      this.tabs.push(Object.assign({}, row));
+      this.onSelectTab(row);
     }
   }
 
+  onSelectTab(row) {
+    this.activetab = row;
+    this.editaction.emit({tab: this.activetab});
+  }
+
   removeTab(row) {
-    this.tabs = this.tabs.filter(a => a.audioSource !== row.audioSource);
+    this.tabs = this.tabs.filter(a => a.id !== row.id);
+    if (this.tabs.length === 1) {
+      this.onSelectTab(this.tabs[0]);
+    } else if (this.tabs.length === 0) {
+      this.onSelectTab(null);
+    }
   }
 }

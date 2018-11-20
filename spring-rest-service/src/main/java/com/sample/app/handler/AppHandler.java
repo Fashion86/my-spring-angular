@@ -65,6 +65,7 @@ public class AppHandler {
 			success = true;
 			resultMap.put("success", success);
 		} catch (final Exception e) {
+			e.printStackTrace();
 			resultMap.put("errorMsg", "Exception happened.");
 			resultMap.put("success", success);
 			resultMap.put("response", "");

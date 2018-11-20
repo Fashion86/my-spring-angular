@@ -8,8 +8,8 @@ public class OracleConnUtils {
 
 	public static Connection getOracleConnection() throws ClassNotFoundException, SQLException {
 
-		String connectionURL = "jdbc:oracle:thin:@localhost:1521:orcl2";
-		String userName = "SYSTEM";
+		String connectionURL = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String userName = "ACPMITDE";
 		String password = "root";
 		return getOracleConnection(connectionURL, userName, password);
 	}

@@ -1,6 +1,7 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+import { FilterdataService } from './services/filterdata.service';
 
 @Injectable()
 export class DataService {
@@ -10,7 +11,12 @@ export class DataService {
       'Content-Type': 'application/json'
     })
   };
-  constructor(private http: HttpClient) {}
+  filters: any;
+  baseURL = 'http://localhost:8080/spring-rest-service/rest/sample';
+  constructor(private http: HttpClient,
+              private filterService: FilterdataService) {
+    this.filters = {};
+  }
 
   setFormData(data) {
     this.formData = data;
@@ -40,43 +46,50 @@ export class DataService {
     this.formData.stations = channels;
   }
   getResult() {
-    console.log(this.formData);
-    const payload = {
-      AsRun: this.formData.asRun,
-      daterange: {
-        start: this.formData.daterange.start,
-        end: this.formData.daterange.end
-      },
-      houseNo: this.formData.houseNo,
-      logs: this.formData.logs,
-      stations: this.formData.stations,
-      channels: this.formData.stations,
-      Filetype: ''
-    };
-    if (isDevMode()) {
-    return this.http.get('../assets/mock/response_mock.json');
-    } else {
-      return this.http.post(
-        'http://localhost:8080/spring-rest-service/rest/sample/getAppRecordBtwDates',
-        this.formData,
-        this.httpOptions
-      );
-    }
+    this.filters = JSON.parse(localStorage.getItem('filter'));
+    // const httpParams = new HttpParams()
+    //   .append('filter', 'fff');
+    // const payload = {
+    //   AsRun: this.formData.asRun,
+    //   daterange: {
+    //     start: this.formData.daterange.start,
+    //     end: this.formData.daterange.end
+    //   },
+    //   houseNo: this.formData.houseNo,
+    //   logs: this.formData.logs,
+    //   stations: this.formData.stations,
+    //   channels: this.formData.stations,
+    //   Filetype: ''
+    // };
+    // if (isDevMode()) {
+    // return this.http.get('../assets/mock/response_mock.json');
+    // } else {
+    // const daterange = {
+    //   start: this.filters.start,
+    //   end: this.filters.end,
+    // };
+
+    const httpParams = new HttpParams()
+      .append('start', this.filters.start)
+      .append('end', this.filters.end);
+      return this.http.post(this.baseURL + '/getAppRecordBtwDates', httpParams);
   }
 
-  getRow(payload) {
-    if (isDevMode()) {
-      return this.http.get('../assets/mock/row.json');
-    } else {
-      return this.http.post('http://localhost:8080/spring-rest-service/rest/sample/getAppRow', payload, this.httpOptions);
-    }
+  getRow(filename) {
+    // if (isDevMode()) {
+    //   return this.http.get('../assets/mock/row.json');
+    // } else {
+    const httpParams = new HttpParams()
+      .append('filename', filename);
+      return this.http.post(this.baseURL + '/getAppRow', httpParams);
+    // }
   }
 
   updateRow(payload) {
     if (isDevMode()) {
       return this.http.get('../assets/mock/response_mock.json');
     } else {
-      return this.http.post('http://localhost:8080/spring-rest-service/rest/sample/updateAppRow', payload, this.httpOptions);
+      return this.http.post(this.baseURL + '/updateAppRow', payload, this.httpOptions);
     }
   }
 }
