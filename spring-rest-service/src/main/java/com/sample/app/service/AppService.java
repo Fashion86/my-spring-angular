@@ -2,10 +2,7 @@ package com.sample.app.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,12 +43,13 @@ public class AppService {
 	public Object getAppRecordBtwDates(Map<String, Object> reqMap) {
 
 		Connection conn = null;
-//		Map<String, String> dateRange = AppUtil.getDateRange(reqMap);
+		Map<String, String> dateRange = AppUtil.getDateRange(reqMap);
 
-		String startDate = reqMap.get("start").toString();
-		String endDate = reqMap.get("end").toString();
-//		List<String> houseNum = AppUtil.getHouseNum(reqMap);
-//		List<String> stations = AppUtil.getStations(reqMap);
+		String startDate = AppUtil.getStartDate(dateRange);
+		String endDate = AppUtil.getEndDate(dateRange);
+		List<String> houseNum = AppUtil.getHouseNum(reqMap);
+		Boolean logs = AppUtil.getLogs(reqMap);
+        List<Map<String, String>> stations = AppUtil.getStations(reqMap);
 //		List<String> channels = AppUtil.getChannels(reqMap);
 //		String fileType= AppUtil.getFileTYpe(reqMap);
 
@@ -66,9 +64,7 @@ public class AppService {
 		}
 		List<AppData> appDataList = new ArrayList<AppData>();
 		try {
-
-//			appDataList = appDao.getAppDataList(conn, startDate, endDate, houseNum,stations,channels, fileType);
-			appDataList = appDao.getAppDataListByDate(conn, startDate, endDate);
+			appDataList = appDao.getAppDataListByCondition(conn, startDate, endDate, houseNum, stations, logs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -97,13 +93,13 @@ public class AppService {
 		return appDataList;
 	}
 
-	public Object updateRowData(Map<String, Object> reqMap) {
+	public List<String> updateRowData(ArrayList<Map<String, Object>>  reqMap) {
 
 		Connection conn = null;
-		Set<String> keys = reqMap.keySet();
-		String id = AppUtil.getIdCaps(reqMap);
-		String key = keys.stream().findFirst().get();
-		String newValue = AppUtil.getValue(reqMap, key);
+//		Set<String> keys = reqMap.keySet();
+//		String id = AppUtil.getIdCaps(reqMap);
+//		String key = keys.stream().findFirst().get();
+//		String newValue = AppUtil.getValue(reqMap, key);
 		try {
 			conn = ConnectionUtils.getDBConnection();
 		} catch (ClassNotFoundException e) {
@@ -111,13 +107,14 @@ public class AppService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		AppData appData = new AppData();
+		List<String> errorList = new ArrayList<String>();
 		try {
-			appData = appDao.updateAppDataRow(conn, id, key, newValue);
+			errorList = appDao.updateAppDataRow(conn, reqMap);
+//			appData = appDao.updateAppDataRow(conn, id, key, newValue);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return appData;
+		return errorList;
 	}
 
 }

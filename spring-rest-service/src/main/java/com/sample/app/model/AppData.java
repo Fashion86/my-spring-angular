@@ -58,7 +58,7 @@ public class AppData {
 	private String fixInBreak;
 	private String onAir;
 	private String empty;
-	private String dateTime;
+	private String date_Time;
 	private String id;
 	private String s;
 	private String title;
@@ -343,7 +343,7 @@ public class AppData {
 	}
 
 	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+		this.date_Time = dateTime;
 	}
 
 	public void setId(String id) {
@@ -568,7 +568,7 @@ public class AppData {
 	}
 
 	public String getDateTime() {
-		return dateTime;
+		return date_Time;
 	}
 
 	public String getId() {

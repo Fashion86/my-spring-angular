@@ -1,5 +1,6 @@
 package com.sample.app.util;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +26,7 @@ public final class AppUtil {
 	}
 		
 	public static String getIdCaps(final Map<String, Object> reqMap) {
-			return (String) reqMap.get(AppConstants.CAPS_ID);
+			return (String) reqMap.get(AppConstants.ID);
 	}
 	public static String getValue(final Map<String, Object> reqMap, final String key) {
 		return (String) reqMap.get(key);
@@ -41,10 +42,14 @@ public final class AppUtil {
 		return (List<String>) reqMap.get(AppConstants.HOUSE_NO);
 	}
 
+	public static  Boolean getLogs(Map<String, Object> reqMap) {
+        return ((Boolean) reqMap.get(AppConstants.LOGS)).booleanValue();
+	}
+
 	@SuppressWarnings("unchecked")
-	public static List<String> getStations(Map<String, Object> reqMap) {
+	public static List<Map<String,String>> getStations(final Map<String, Object> reqMap) {
 		
-		return (List<String>) reqMap.get(AppConstants.STATIONS);
+		return ( List<Map<String,String>>)reqMap.get(AppConstants.STATIONS);
 	}
 
 	@SuppressWarnings("unchecked")

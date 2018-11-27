@@ -25,5 +25,7 @@ public final class AppConstants {
 	public static final Object STATIONS = "stations";
 	public static final Object CHANNELS = "channels";
 	public static final Object FILE_TYPE = "Filetype";
+	public static final Object SELECTED_STATIONS = "slectedStations";
+	public static final Object LOGS = "logs";
 
 }

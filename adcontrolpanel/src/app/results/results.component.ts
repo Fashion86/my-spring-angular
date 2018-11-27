@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { DataService } from '../data.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as Handsontable from 'handsontable';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-results',
@@ -14,7 +14,8 @@ export class ResultsComponent implements OnInit {
   editaction = new EventEmitter<any>();
   activetab: any;
   constructor(private dataService: DataService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private toastr: ToastrService) {
 
   }
 
@@ -22,7 +23,9 @@ export class ResultsComponent implements OnInit {
     this.dataService.getResult().subscribe(
       res => {
         this.results = res;
-        console.log(this.results);
+        if (this.results.response.length < 1) {
+          this.toastr.warning('No Results Found', 'Search Result');
+        }
       },
       error => {
         console.log(error);

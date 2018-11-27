@@ -1,6 +1,8 @@
 package com.sample.app.handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -109,15 +111,16 @@ public class AppHandler {
 	 * @return
 	 */
 	public ResponseEntity<Map<String, Object>> updateAppRowData(HttpServletRequest httpServletRequest,
-			Map<String, Object> reqMap) {
+                                                                ArrayList<Map<String, Object>> reqMap) {
 		boolean success = false;
 		final Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			final Object appDataList = appService.updateRowData(reqMap);
+			final List<String> appDataList = appService.updateRowData(reqMap);
 			resultMap.put("response", appDataList);
 			success = true;
 			resultMap.put("success", success);
 		} catch (final Exception e) {
+			success = false;
 			resultMap.put("errorMsg", "Exception happened.");
 			resultMap.put("success", success);
 			resultMap.put("response", "");

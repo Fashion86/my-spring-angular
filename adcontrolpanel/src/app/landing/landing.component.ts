@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { FilterdataService } from '../services/filterdata.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-landing',
@@ -48,23 +49,14 @@ export class LandingComponent implements OnInit  {
     private router: Router,
     private dataService: DataService,
     private filterService: FilterdataService,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private toastr: ToastrService) {
     this.display = 'block';
   }
 
   ngOnInit() {
-    this.http.get('assets/mock/Test.xml', { headers: new HttpHeaders()
-      .set('Content-Type', 'text/xml')
-      , responseType: 'text' }).subscribe((res) => {
-        const xml = res;
-        parseString(xml, (err, result) => {
-          this.allStatios = this.formatData(result.channel.mainStation);
-          this.moveOptions = this.allStatios.map(x => Object.assign({}, x));
-          this.searchForm.stations = this.allStatios.map(x => Object.assign({}, x));
-          this.sortAssending();
-
-        });
-    });
+    // this.searchForm = JSON.parse(localStorage.getItem('filter'));
+    this.onreset();
   }
 // To format xml data for all main and sub stations
   formatData(data) {
@@ -267,11 +259,52 @@ export class LandingComponent implements OnInit  {
         });
     });
 
+    if (this.searchForm.houseNo.length < 1) {
+      this.toastr.warning('Please provide at least one House Number', 'Search Criteria');
+      return;
+    }
+    if (!this.searchForm.logs && !this.searchForm.asRun) {
+      this.toastr.warning('Please select either Log or AsRun or both', 'Search Criteria');
+      return;
+    }
+    if (this.searchForm.stations.length < 1) {
+      this.toastr.warning('Please select the required station/stations', 'Search Criteria');
+      return;
+    }
     localStorage.setItem('filter', JSON.stringify(Object.assign({}, this.searchForm)));
-    console.log(JSON.parse(localStorage.getItem('filter')));
     this.router.navigate(['results']);
   }
+  onreset() {
+    this.searchForm = {
+      stations: [],
+      slectedStations: [],
+      logs: false,
+      asRun: false,
+      houseNo: [],
+      daterange: {
+        start: '',
+        end: ''
+      },
+    };
+    this.allStatios = [];
+    this.moveOptions = [];
+    this.removeOptions = [];
+    this.removeData = [];
+    this.moveData = [];
+    this.housenumberBuffer = '';
+    this.http.get('assets/mock/Test.xml', { headers: new HttpHeaders()
+        .set('Content-Type', 'text/xml')
+      , responseType: 'text' }).subscribe((res) => {
+      const xml = res;
+      parseString(xml, (err, result) => {
+        this.allStatios = this.formatData(result.channel.mainStation);
+        this.moveOptions = this.allStatios.map(x => Object.assign({}, x));
+        this.searchForm.stations = this.allStatios.map(x => Object.assign({}, x));
+        this.sortAssending();
 
+      });
+    });
+  }
   selectedDate(value: any, datepicker?: any) {
     // or manupulate your own internal property
     this.searchForm.daterange.start = value.start.format('YYYY-MM-DD');

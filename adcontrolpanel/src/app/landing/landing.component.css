@@ -25,3 +25,6 @@
     font-size: 12px;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
+.warnning{
+    border:1pt solid darkred;
+}

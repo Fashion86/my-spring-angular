@@ -1,5 +1,6 @@
 package com.sample.app.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,10 +44,16 @@ public class AppController {
 	 * @return Response Entity
 	 */
 	@RequestMapping(value = "/getAppRecordBtwDates", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-	public ResponseEntity<Map<String, Object>> getAppRecordBtwDates(@RequestParam Map<String, Object> reqMap,
-			final HttpServletRequest httpServletRequest) {
+	public ResponseEntity<Map<String, Object>> getAppRecordBtwDates(@RequestBody Map<String, Object> reqMap,
+			final HttpServletRequest httpServletRequest) throws Exception {
 		return handler.getAppRecordBtwDates(httpServletRequest, reqMap);
 	}
+
+//	@RequestMapping(value = "/getAppRecordBtwDates", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+//	public Map<String, Object> testBtwDates(@RequestBody Map<String, Object> reqMap,
+//																	final HttpServletRequest httpServletRequest) throws Exception {
+//		return reqMap;
+//	}
 
 
 	/**
@@ -71,8 +78,8 @@ public class AppController {
 	 * @return Response Entity
 	 */
 	@RequestMapping(value = "/updateAppRow", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-	public ResponseEntity<Map<String, Object>> updateAppRowData(@RequestBody final Map<String, Object> reqMap,
-			final HttpServletRequest httpServletRequest) {
+	public ResponseEntity<Map<String, Object>> updateAppRowData(@RequestBody ArrayList<Map<String, Object>> reqMap,
+                                                                final HttpServletRequest httpServletRequest) {
 
 		return handler.updateAppRowData(httpServletRequest, reqMap);
 	}
