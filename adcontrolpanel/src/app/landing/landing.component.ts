@@ -31,16 +31,18 @@ export class LandingComponent implements OnInit  {
   removeData = [];
   moveData = [];
   searchForm = {
+    // channels: [],
     stations: [],
     slectedStations: [],
     logs: false,
     asRun: false,
-    houseNo: '',
+    houseNo: [],
     daterange: {
       start: '',
       end: ''
     },
   };
+  housenumberBuffer = '';
 
   constructor(
     private router: Router,
@@ -73,7 +75,9 @@ export class LandingComponent implements OnInit  {
         substations.push(
           {
             label: row.$.name,
-            name: sub.$.name
+            name: sub.$.name,
+            id: sub.$.id,
+            abbr: sub.$.abbr
           }
         );
       });
@@ -242,6 +246,10 @@ export class LandingComponent implements OnInit  {
     return 0;
   }
   onSubmit() {
+    // get house number array
+    this.searchForm.houseNo = this.housenumberBuffer.split(/[.\*+/_,:; ]/);
+    this.searchForm.houseNo = this.searchForm.houseNo.filter(a => a !== '');
+
     if (this.searchForm.daterange.start !== '' && this.searchForm.daterange.end !== '') {
       this.searchForm.daterange.start = moment(this.searchForm.daterange.start, 'YYYY-MM-DD').format('YYYY-MM-DD');
       this.searchForm.daterange.end = moment(this.searchForm.daterange.end, 'YYYY-MM-DD').format('YYYY-MM-DD');
@@ -252,12 +260,15 @@ export class LandingComponent implements OnInit  {
     if (this.searchForm.daterange.end === '') {
       this.searchForm.daterange.end = moment(new Date().toISOString(), 'YYYY-MM-DD').format('YYYY-MM-DD');
     }
-    const filter = {
-      'start': this.searchForm.daterange.start,
-      'end': this.searchForm.daterange.end
-    };
-    this.filterService.setFilter(Object.assign({}, filter));
-    localStorage.setItem('filter', JSON.stringify(filter));
+    this.searchForm.stations = [];
+    this.searchForm.slectedStations.forEach(s => {
+        s.values.forEach(t => {
+            this.searchForm.stations.push({channel: t['id'], station: t['abbr']});
+        });
+    });
+
+    localStorage.setItem('filter', JSON.stringify(Object.assign({}, this.searchForm)));
+    console.log(JSON.parse(localStorage.getItem('filter')));
     this.router.navigate(['results']);
   }
 

@@ -1,5 +1,24 @@
 <div *ngIf="result">
+  <button type="button" class="btn btn-primary" [disabled]="disabled" style="margin: 5px" (click)="updateConfirm()">Save</button>
   <hot-table class="hot" [data]="dataset" [width]="800" [colHeaders]="true" [rowHeaders]="true" (afterUnlisten)="setWidth($event)" (afterChange)="edit($event)">
     <hot-column *ngFor="let colHeader of colHeaders" [data]="colHeader"  [title]="colHeader" [width]="120" [readOnly]="colHeader === 'id'"></hot-column>
   </hot-table>
+</div>
+
+<div class="modal" id="myModal" [ngStyle]="{'display': dispaly}">
+  <div role="document" class="modal-dialog modal-lg" style="width:500px">
+    <div class="modal-content">
+      <div class="modal-header" data-show="true">
+        <h4 class="modal-title pull-left">Confirm</h4>
+          <!--<a>x</a>-->
+      </div>
+      <div class="modal-body" style="display: flow-root;">
+          <div><p>Are you sure update all data?</p></div>
+          <div>
+              <button type="button" class="btn btn-primary" style="margin: 5px; float: right" (click)="updateCancel()">No</button>
+              <button type="button" class="btn btn-primary" style="margin: 5px; float: right" (click)="updateAllData()">Yes</button>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>

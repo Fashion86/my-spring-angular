@@ -14,6 +14,8 @@ export class ChannelTabContentComponent implements OnInit {
   hotSettings;
   colHeaders = [];
   result;
+  disabled = true;
+  dispaly = 'none';
   @Input() data: any;
   @Input() editaction: EventEmitter<any>;
   constructor(
@@ -59,18 +61,45 @@ export class ChannelTabContentComponent implements OnInit {
   }
 
   edit(event) {
-    console.log(event)
-    // const row = event.hotInstance.getSourceData();
-    // const payload = {};
-    // payload[tableMap[event.params[0][0][1]]] = event.params[0][0][3];
-    // payload['ID'] = row[0].id;
-    // console.log(payload);
-    // this.dataService.updateRow(payload).subscribe(res => {
-    //     this.toastr.success('Successfully updated.');
-    //   }, error => {
-    //     event.hotInstance.undo();
-    //     this.toastr.error('Sorry unable to save.');
-    //   });
+    if (event.params.length > 0) {
+      if (event.params[0] && event.params[0].length > 0) {
+        const editvalue = event.params[0][0];
+        if (editvalue[2] !== editvalue[3]) {
+          this.disabled = false;
+        }
+      }
+    }
+  }
+
+  updateConfirm() {
+    this.dispaly = 'block';
+  }
+
+  updateCancel() {
+    this.dispaly = 'none';
+  }
+
+  updateAllData() {
+    this.dispaly = 'none';
+    this.dataService.updateRow(this.dataset).subscribe(
+      res => {
+        if (res['success']) {
+          if (res['response'].length > 0) {
+            this.toastr.error(res['response'][0], 'Update status');
+          } else {
+            this.toastr.success('All data changed!', 'Update status');
+            this.disabled = true;
+          }
+        } else {
+          this.toastr.error('Update Error', 'Update status');
+        }
+
+      },
+      error => {
+        console.log(error);
+        alert('Unable to fetch data');
+      }
+    );
   }
 
   setWidth(event) {

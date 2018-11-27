@@ -29,7 +29,7 @@
                                                     <label> House No: </label>
                                                 </td>
                                                 <td>
-                                                    <textarea placeholder="HouseNumber" style="overflow:auto;resize:none" name="houseNo" [(ngModel)]="searchForm.houseNo" rows="1" style="width:200px"> </textarea>
+                                                    <textarea placeholder="HouseNumber" style="overflow:auto;resize:none" name="houseNo" [(ngModel)]="housenumberBuffer" rows="1" style="width:200px"> </textarea>
                                                     <br/> <i class="test">Please do not use "-" in between multiple house number</i>
                                                 </td>
                                             </tr>
@@ -40,7 +40,7 @@
                                                     <label for="logs">Logs</label>
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" id="asRuns" name="asRuns" />
+                                                    <input type="checkbox" id="asRuns" name="asRuns" [(ngModel)]="searchForm.asRun" />
                                                     <label for="asRuns">As Runs</label>
                                                 </td>
                                             </tr>
